@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPilot AI — Dedicated AI Mock Interview Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+            --primary-1: #7c3aed;
+            --primary-2: #ec4899;
+            --primary-3: #f59e0b;
+            --dark-bg: #070714;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #7c3aed, #ec4899, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.35);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: rgba(124, 58, 237, 0.5);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: rgba(124, 58, 237, 0.15);
+            color: #a78bfa;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            color: #a78bfa;
+        }
+
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(236, 72, 153, 0.3));
+            border-color: rgba(124, 58, 237, 0.5);
+            color: #fff;
+        }
+
+        .bg-grid {
+            background-image:
+                linear-gradient(rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 99999;
+            background: rgba(10, 10, 30, 0.96);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 16px 24px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+            display: none;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-grid fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toast-icon" style="font-size:18px;"><i class="fas fa-check-circle text-emerald-400"></i></span>
+        <span id="toast-msg">Action completed successfully</span>
+    </div>
+
+    <!-- Header Navbar -->
+    <header class="glass fixed top-0 left-0 right-0 z-50 px-6 h-[68px] flex items-center justify-between border-b border-white/[0.04]">
+        <div class="flex items-center gap-2.5 cursor-pointer" onclick="window.location.href='index.html'">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <span style="font-weight:700;font-size:1.15rem;letter-spacing:-0.5px;">JobPilot <span style="color:#a78bfa;">AI</span></span>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+            <a href="index.html#home" class="hover:text-white transition-colors">Home</a>
+            <a href="index.html#companies" class="hover:text-white transition-colors">Companies</a>
+            <a href="index.html#jobs" class="hover:text-white transition-colors">Jobs</a>
+            <a href="index.html#resume" class="hover:text-white transition-colors">Resume Analyzer</a>
+            <a href="mock-interview.html" class="text-white font-semibold flex items-center gap-1.5"><i class="fas fa-headset text-purple-400"></i> Mock Interviews</a>
+            <a href="index.html#dashboard" class="hover:text-white transition-colors">Dashboard</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="btn-secondary text-xs py-2 px-4"><i class="fas fa-arrow-left"></i> Back to Main Platform</a>
+        </div>
+    </header>
+
+    <div style="height:68px;"></div>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="max-w-[1280px] mx-auto px-6 py-12 relative z-10">
+
+        <!-- Title Banner -->
+        <div class="text-center mb-12">
+            <span class="badge badge-primary mb-3"><i class="fas fa-robot"></i> AI Practice Exam & Interview Room</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">
+                AI <span class="gradient-text">Mock Interview Studio</span>
+            </h1>
+            <p class="text-slate-400 text-base md:text-lg max-width-[680px] mx-auto leading-relaxed">
+                Configure your target enterprise, desired role, and technical skills to take a customized live interview exam graded by AI.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left 7 cols: Controls & Exam Room -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+
+                <!-- Configuration Card -->
+                <div class="glass-card p-8 rounded-[24px]">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-sliders-h text-purple-400"></i> Configure Practice Exam</h3>
+                        <span class="badge badge-success"><i class="fas fa-bolt"></i> Real-Time AI Evaluator</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="form-label"><i class="fas fa-building text-purple-400 mr-1"></i> Target Company</label>
+                            <select class="form-input" id="interview-company">
+                                <option value="Google">Google</option>
+                                <option value="Microsoft">Microsoft</option>
+                                <option value="Amazon">Amazon</option>
+                                <option value="Apple">Apple</option>
+                                <option value="Meta">Meta</option>
+                                <option value="Nvidia">Nvidia</option>
+                                <option value="Netflix">Netflix</option>
+                                <option value="Adobe">Adobe</option>
+                                <option value="IBM">IBM</option>
+                                <option value="OpenAI">OpenAI</option>
+                                <option value="TCS">TCS</option>
+                                <option value="Infosys">Infosys</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label"><i class="fas fa-briefcase text-pink-400 mr-1"></i> Target Position</label>
+                            <select class="form-input" id="interview-role">
+                                <option value="Software Engineer">Software Engineer</option>
+                                <option value="Frontend Engineer">Frontend Engineer</option>
+                                <option value="Backend Engineer">Backend Engineer</option>
+                                <option value="Full Stack Engineer">Full Stack Engineer</option>
+                                <option value="Data Scientist">Data Scientist</option>
+                                <option value="Product Manager">Product Manager</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="AI/ML Engineer">AI/ML Specialist</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tech Skills Input & Quick Chips -->
+                    <div class="mb-5">
+                        <label class="form-label"><i class="fas fa-code text-emerald-400 mr-1"></i> Selected Tech & Core Skills</label>
+                        <input class="form-input mb-2" id="interview-skills" placeholder="e.g. Java, Spring Boot, React, AWS, System Design, SQL" value="Java, React, System Design, SQL">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('Java')">+ Java</span>
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('React')">+ React</span>
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('Python')">+ Python</span>
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('AWS')">+ AWS</span>
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('System Design')">+ System Design</span>
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('Kubernetes')">+ Kubernetes</span>
+                            <span class="skill-tag cursor-pointer" onclick="addSkill('Spring Boot')">+ Spring Boot</span>
+                        </div>
+                    </div>
+
+                    <!-- Seniority Level Buttons -->
+                    <div class="mb-6">
+                        <label class="form-label"><i class="fas fa-signal text-amber-400 mr-1"></i> Experience / Seniority Level</label>
+                        <div class="flex flex-wrap gap-2.5">
+                            <button class="tab-btn active" data-level="junior" onclick="setLevel('junior')">Junior (0-2 yrs)</button>
+                            <button class="tab-btn" data-level="mid" onclick="setLevel('mid')">Mid-Level (3-5 yrs)</button>
+                            <button class="tab-btn" data-level="senior" onclick="setLevel('senior')">Senior (5+ yrs)</button>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary w-full justify-center py-3.5" onclick="startInterview()"><i class="fas fa-play"></i> Generate & Start Mock Exam</button>
+                </div>
+
+                <!-- Live Exam Workspace -->
+                <div id="interview-session" style="display:none;" class="glass-card p-8 rounded-[24px]">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge badge-primary" id="interview-badge">Question 1 of 6</span>
+                        <span class="text-xs text-slate-400"><i class="fas fa-clock text-amber-400 mr-1"></i> AI Exam Live</span>
+                    </div>
+
+                    <div class="glass p-5 rounded-2xl mb-5 bg-white/[0.02]">
+                        <p class="font-semibold text-base text-white leading-relaxed" id="interview-question-text">
+                            Loading your tailored interview question...
+                        </p>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="form-label mb-0">Your Response (Text or Voice)</label>
+                            <span class="text-xs text-emerald-400 font-medium"><i class="fas fa-lightbulb"></i> Tip: Include specific project examples & metrics</span>
+                        </div>
+                        <textarea class="form-input" id="interview-answer" rows="5" placeholder="Formulate your response using the STAR method (Situation, Task, Action, Result)..."></textarea>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <button class="btn-primary" onclick="submitAnswer()"><i class="fas fa-paper-plane"></i> Submit Answer</button>
+                        <button class="btn-secondary" onclick="nextQuestion()"><i class="fas fa-forward"></i> Skip Question</button>
+                        <button class="btn-secondary text-red-400 border-red-500/30 hover:bg-red-500/10" onclick="endInterview()"><i class="fas fa-stop-circle"></i> End Session</button>
+                    </div>
+
+                    <div id="interview-feedback" style="display:none;" class="mt-6"></div>
+                </div>
+
+            </div>
+
+            <!-- Right 5 cols: Analytics & STAR Framework Guide -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+
+                <!-- Performance Card -->
+                <div class="glass-card p-8 rounded-[24px]">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2"><i class="fas fa-chart-line text-emerald-400"></i> Exam Metrics</h3>
+
+                    <div class="grid grid-cols-3 gap-3 mb-6 text-center">
+                        <div class="bg-white/[0.03] p-4 rounded-xl border border-white/[0.04]">
+                            <div class="text-2xl md:text-3xl font-extrabold text-purple-400" id="interview-score-display">—</div>
+                            <div class="text-xs text-slate-400 mt-1">Average Score</div>
+                        </div>
+                        <div class="bg-white/[0.03] p-4 rounded-xl border border-white/[0.04]">
+                            <div class="text-2xl md:text-3xl font-extrabold text-emerald-400" id="interview-accuracy-display">—</div>
+                            <div class="text-xs text-slate-400 mt-1">STAR Rating</div>
+                        </div>
+                        <div class="bg-white/[0.03] p-4 rounded-xl border border-white/[0.04]">
+                            <div class="text-2xl md:text-3xl font-extrabold text-amber-400" id="interview-questions-display">0</div>
+                            <div class="text-xs text-slate-400 mt-1">Answered</div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between text-xs text-slate-400 mb-2">
+                        <span>Exam Completion Progress</span>
+                        <span id="interview-progress-pct">0%</span>
+                    </div>
+                    <div class="h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                        <div id="interview-progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-pink-500 w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- STAR Framework Card -->
+                <div class="glass-card p-7 rounded-[24px]">
+                    <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2"><i class="fas fa-award text-amber-400"></i> The STAR Method Guide</h3>
+                    
+                    <div class="flex flex-col gap-3 text-sm text-slate-300">
+                        <div class="flex items-start gap-3">
+                            <span class="w-7 h-7 rounded-lg bg-purple-500/20 text-purple-400 font-extrabold flex items-center justify-center flex-shrink-0">S</span>
+                            <div><strong>Situation:</strong> Describe the context and technical background of your project.</div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="w-7 h-7 rounded-lg bg-pink-500/20 text-pink-400 font-extrabold flex items-center justify-center flex-shrink-0">T</span>
+                            <div><strong>Task:</strong> Explain your specific role and key problem statement.</div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 font-extrabold flex items-center justify-center flex-shrink-0">A</span>
+                            <div><strong>Action:</strong> Detail your step-by-step engineering implementation & tools.</div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-extrabold flex items-center justify-center flex-shrink-0">R</span>
+                            <div><strong>Result:</strong> State quantifiable outcomes (e.g. reduced response time by 40%).</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JS Logic -->
+    <script>
+        const API_BASE = (window.location.hostname === 'localhost' && window.location.port !== '8080' && window.location.port !== '') ? 'http://localhost:8080' : '';
+        let currentInterviewLevel = 'junior';
+        let currentInterviewQuestions = [];
+        let currentQuestionIndex = 0;
+        let interviewActive = false;
+
+        function showToast(type, msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.className = 'toast show';
+            toast.style.display = 'flex';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
+
+        function setLevel(level) {
+            currentInterviewLevel = level;
+            document.querySelectorAll('[data-level]').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-level="${level}"]`).classList.add('active');
+        }
+
+        function addSkill(skill) {
+            const input = document.getElementById('interview-skills');
+            const current = input.value.split(',').map(s => s.trim()).filter(Boolean);
+            if (!current.includes(skill)) {
+                current.push(skill);
+                input.value = current.join(', ');
+            }
+        }
+
+        function getAuthToken() {
+            return localStorage.getItem('accessToken');
+        }
+
+        async function apiFetch(endpoint, options = {}) {
+            const token = getAuthToken();
+            const headers = options.headers || {};
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+            if (options.body && typeof options.body === 'string') {
+                headers['Content-Type'] = 'application/json';
+            }
+            return fetch(API_BASE + endpoint, { ...options, headers });
+        }
+
+        async function startInterview() {
+            const token = getAuthToken();
+            if (!token) {
+                showToast('error', 'Please log in on the main platform first.');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1200);
+                return;
+            }
+
+            const company = document.getElementById('interview-company').value;
+            const role = document.getElementById('interview-role').value;
+            const skills = document.getElementById('interview-skills').value.trim();
+
+            try {
+                const qRes = await apiFetch(`/api/interview/questions?company=${encodeURIComponent(company)}&role=${encodeURIComponent(role)}&skills=${encodeURIComponent(skills)}&level=${encodeURIComponent(currentInterviewLevel)}`);
+                if (qRes.ok) {
+                    currentInterviewQuestions = await qRes.json();
+                } else {
+                    currentInterviewQuestions = ["Explain how you approach high-concurrency architecture design."];
+                }
+
+                const response = await apiFetch('/api/interview/start', {
+                    method: 'POST',
+                    body: JSON.stringify({ company, role, experienceLevel: currentInterviewLevel, skills })
+                });
+
+                if (response.ok) {
+                    currentQuestionIndex = 0;
+                    interviewActive = true;
+
+                    document.getElementById('interview-session').style.display = 'block';
+                    document.getElementById('interview-question-text').textContent = currentInterviewQuestions[0];
+                    document.getElementById('interview-badge').textContent = `Question 1 of ${currentInterviewQuestions.length} · ${company}`;
+                    document.getElementById('interview-answer').value = '';
+                    document.getElementById('interview-feedback').style.display = 'none';
+
+                    document.getElementById('interview-score-display').textContent = '—';
+                    document.getElementById('interview-accuracy-display').textContent = '—';
+                    document.getElementById('interview-questions-display').textContent = '0';
+                    document.getElementById('interview-progress-bar').style.width = '0%';
+                    document.getElementById('interview-progress-pct').textContent = '0%';
+
+                    showToast('success', `Mock exam initialized for ${role} at ${company}!`);
+                } else {
+                    showToast('error', 'Failed to initialize session. Please log in.');
+                }
+            } catch (e) {
+                showToast('error', 'Server connection error.');
+            }
+        }
+
+        async function submitAnswer() {
+            if (!interviewActive) return;
+            const answer = document.getElementById('interview-answer').value.trim();
+            if (!answer) {
+                showToast('error', 'Please type your answer before submitting.');
+                return;
+            }
+
+            try {
+                const response = await apiFetch('/api/interview/answer', {
+                    method: 'POST',
+                    body: JSON.stringify({ answer })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    const sessRes = await apiFetch('/api/interview/history');
+                    if (sessRes.ok) {
+                        const history = await sessRes.json();
+                        const activeSess = history.find(s => s.active === true) || history[0];
+
+                        document.getElementById('interview-score-display').textContent = activeSess.score;
+                        document.getElementById('interview-accuracy-display').textContent = activeSess.accuracy + '%';
+                        document.getElementById('interview-questions-display').textContent = activeSess.questionsAnswered;
+                        
+                        const pct = Math.round(activeSess.questionsAnswered / activeSess.totalQuestions * 100);
+                        document.getElementById('interview-progress-bar').style.width = pct + '%';
+                        document.getElementById('interview-progress-pct').textContent = pct + '%';
+
+                        if (activeSess.questionsAnswered >= activeSess.totalQuestions) {
+                            interviewActive = false;
+                            displayEndInterviewCard(activeSess);
+                            return;
+                        }
+                    }
+
+                    const feedbackDiv = document.getElementById('interview-feedback');
+                    feedbackDiv.style.display = 'block';
+                    feedbackDiv.innerHTML = `
+                        <div class="glass p-5 rounded-2xl border border-purple-500/20 bg-purple-500/5">
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-lg flex-shrink-0">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <h4 class="font-bold text-sm text-white">AI Evaluation Score</h4>
+                                        <span class="badge badge-success text-xs">Score: ${data.score}/100</span>
+                                    </div>
+                                    <p class="text-xs text-slate-300 leading-relaxed">${data.feedback}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('interview-answer').value = '';
+                }
+            } catch (e) {
+                showToast('error', 'Connection issue.');
+            }
+        }
+
+        function nextQuestion() {
+            if (!interviewActive) return;
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= currentInterviewQuestions.length) {
+                endInterview();
+                return;
+            }
+            const company = document.getElementById('interview-company').value;
+            document.getElementById('interview-question-text').textContent = currentInterviewQuestions[currentQuestionIndex];
+            document.getElementById('interview-badge').textContent = `Question ${currentQuestionIndex + 1} of ${currentInterviewQuestions.length} · ${company}`;
+            document.getElementById('interview-answer').value = '';
+            document.getElementById('interview-feedback').style.display = 'none';
+        }
+
+        async function endInterview() {
+            try {
+                const response = await apiFetch('/api/interview/end', { method: 'POST' });
+                if (response.ok) {
+                    const data = await response.json();
+                    interviewActive = false;
+                    displayEndInterviewCard(data);
+                }
+            } catch (e) {
+                showToast('error', 'Failed to end interview.');
+            }
+        }
+
+        function displayEndInterviewCard(session) {
+            document.getElementById('interview-feedback').style.display = 'block';
+            document.getElementById('interview-feedback').innerHTML = `
+                <div class="glass p-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 mt-4">
+                    <h4 class="font-bold text-base text-emerald-400 mb-3 flex items-center gap-2"><i class="fas fa-trophy text-amber-400"></i> Mock Interview Exam Complete!</h4>
+                    <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+                        <div class="bg-black/20 p-3 rounded-xl">
+                            <div class="text-xl font-bold text-purple-400">${session.score}</div>
+                            <div class="text-[11px] text-slate-400">Avg Score</div>
+                        </div>
+                        <div class="bg-black/20 p-3 rounded-xl">
+                            <div class="text-xl font-bold text-emerald-400">${session.accuracy}%</div>
+                            <div class="text-[11px] text-slate-400">STAR Rating</div>
+                        </div>
+                        <div class="bg-black/20 p-3 rounded-xl">
+                            <div class="text-xl font-bold text-amber-400">${session.questionsAnswered}/${session.totalQuestions}</div>
+                            <div class="text-[11px] text-slate-400">Answered</div>
+                        </div>
+                    </div>
+                    <button class="btn-primary w-full justify-center py-3" onclick="document.getElementById('interview-feedback').style.display='none';document.getElementById('interview-session').style.display='none';">
+                        <i class="fas fa-check-circle"></i> Save Performance Summary
+                    </button>
+                </div>
+            `;
+            document.getElementById('interview-progress-bar').style.width = '100%';
+            document.getElementById('interview-progress-pct').textContent = '100%';
+        }
+    </script>
+</body>
+
+</html>

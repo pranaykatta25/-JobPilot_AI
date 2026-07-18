@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPilot AI — Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.10);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            --primary-1: #7c3aed;
+            --primary-2: #ec4899;
+            --primary-3: #f59e0b;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .btn-primary:hover::after {
+            opacity: 1;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.35);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: rgba(124, 58, 237, 0.4);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+        }
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .bg-grid {
+            background-image:
+                linear-gradient(rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .bg-radial-gradient {
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
+        }
+
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 99999;
+            background: rgba(10, 10, 30, 0.96);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 16px 24px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+            display: none;
+            max-width: 400px;
+        }
+        .toast.show {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toast .icon {
+            font-size: 20px;
+        }
+        .toast.success .icon {
+            color: #34d399;
+        }
+        .toast.error .icon {
+            color: #f87171;
+        }
+        .toast.info .icon {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body class="p-6">
+
+    <!-- Background aesthetics -->
+    <div class="bg-grid absolute inset-0 pointer-events-none"></div>
+    <div class="bg-radial-gradient absolute inset-0 pointer-events-none"></div>
+    <div class="hero-orb" style="width:500px;height:500px;background:#7c3aed;top:-100px;left:-100px;"></div>
+    <div class="hero-orb" style="width:400px;height:400px;background:#ec4899;bottom:-80px;right:-80px;"></div>
+
+    <!-- ===== TOAST ===== -->
+    <div id="toast" class="toast">
+        <span class="icon"><i class="fas fa-check-circle"></i></span>
+        <span id="toast-msg">Action completed</span>
+    </div>
+
+    <!-- Form Container -->
+    <div class="glass relative z-10 w-full max-w-[450px] rounded-[24px] p-8 md:p-10">
+        <!-- Logo -->
+        <div class="flex items-center justify-center gap-2 mb-6 cursor-pointer" onclick="window.location.href='index.html'">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <span style="font-weight:700;font-size:1.15rem;letter-spacing:-0.5px;">JobPilot <span style="color:#a78bfa;">AI</span></span>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signup-form">
+            <h3 class="text-2xl font-bold text-center mb-6">Create Account</h3>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                    <label class="form-label">First Name</label>
+                    <input class="form-input" id="signup-first" placeholder="John">
+                </div>
+                <div>
+                    <label class="form-label">Last Name</label>
+                    <input class="form-input" id="signup-last" placeholder="Doe">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" id="signup-email" type="email" placeholder="john@example.com">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input class="form-input" id="signup-phone" placeholder="+1 234 567 890">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input class="form-input" id="signup-password" type="password" placeholder="••••••••">
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Confirm Password</label>
+                <input class="form-input" id="signup-confirm" type="password" placeholder="••••••••">
+            </div>
+            <div class="mb-6 flex items-start gap-2">
+                <input type="checkbox" id="signup-terms" style="accent-color:#7c3aed;cursor:pointer;margin-top:3px;">
+                <label for="signup-terms" class="text-xs text-slate-400 cursor-pointer select-none leading-relaxed">I accept the Terms & Conditions</label>
+            </div>
+            <button class="btn-primary w-full justify-center mb-6" onclick="submitSignup()"><i class="fas fa-user-plus"></i> Register</button>
+            <p class="text-sm text-slate-500 text-center">Already have an account? <a href="login.html" class="text-[#a78bfa] font-semibold hover:underline">Log In</a></p>
+        </div>
+
+        <!-- Back to Home Link -->
+        <div class="mt-6 pt-4 border-t border-white/[0.04] text-center">
+            <a href="index.html" class="text-xs text-slate-400 hover:text-white transition-colors duration-200"><i class="fas fa-arrow-left mr-1.5"></i> Back to Home</a>
+        </div>
+    </div>
+
+    <!-- JS Handling -->
+    <script>
+        const API_BASE = (window.location.port !== '8080') ? 'http://localhost:8080' : '';
+        function showToast(type, msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toast.className = 'toast show ' + type;
+            toastMsg.innerText = msg;
+            
+            const icon = toast.querySelector('.icon i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            } else {
+                icon.className = 'fas fa-info-circle';
+            }
+
+            toast.style.display = 'flex';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 4000);
+        }
+
+        async function submitSignup() {
+            const firstName = document.getElementById('signup-first').value.trim();
+            const lastName = document.getElementById('signup-last').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const phone = document.getElementById('signup-phone').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            const termsAccepted = document.getElementById('signup-terms').checked;
+
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                showToast('error', 'Please fill in all required fields.');
+                return;
+            }
+            if (!termsAccepted) {
+                showToast('error', 'You must agree to the Terms & Conditions.');
+                return;
+            }
+
+            try {
+                const response = await fetch(API_BASE + '/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, phone, password, confirmPassword, termsAccepted })
+                });
+
+                if (response.ok) {
+                    showToast('success', 'Registration successful! Redirecting to login...');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1200);
+                } else {
+                    const err = await response.json();
+                    showToast('error', Object.values(err).join(', ') || 'Signup failed.');
+                }
+            } catch (e) {
+                showToast('error', 'Server registration failed.');
+            }
+        }
+    </script>
+</body>
+</html>
